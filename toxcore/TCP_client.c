@@ -964,7 +964,6 @@ static int do_confirmed_TCP(TCP_Client_Connection *conn, const Mono_Time *mono_t
 
     while (tcp_process_packet(conn, userdata)) {
         // Keep reading until error or out of data.
-        continue;
     }
 
     return 0;

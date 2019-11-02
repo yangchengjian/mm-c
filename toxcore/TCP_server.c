@@ -1246,7 +1246,6 @@ static void do_confirmed_recv(TCP_Server *tcp_server, uint32_t i)
 {
     while (tcp_process_secure_packet(tcp_server, i)) {
         // Keep reading until an error occurs or there is no more data to read.
-        continue;
     }
 }
 
