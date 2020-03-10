@@ -2930,6 +2930,25 @@ typedef enum TOX_ERR_CONFERENCE_GET_TYPE {
 TOX_CONFERENCE_TYPE tox_conference_get_type(const Tox *tox, uint32_t conference_number,
         TOX_ERR_CONFERENCE_GET_TYPE *error);
 
+
+typedef enum TOX_ERR_CONFERENCE_GET_ID {
+
+    /**
+     * The function returned successfully.
+     */
+    TOX_ERR_CONFERENCE_GET_ID_OK,
+
+    /**
+     * One of the arguments to the function was NULL when it was not expected.
+     */
+    TOX_ERR_CONFERENCE_GET_ID_NULL,
+
+    /**
+     * No conference with the given id exists on the conference list.
+     */
+    TOX_ERR_CONFERENCE_GET_ID_NOT_FOUND,
+
+} TOX_ERR_CONFERENCE_GET_ID;
 /**
  * Get the conference unique ID.
  *
@@ -2939,7 +2958,7 @@ TOX_CONFERENCE_TYPE tox_conference_get_type(const Tox *tox, uint32_t conference_
  *
  * @return true on success.
  */
-bool tox_conference_get_id(const Tox *tox, uint32_t conference_number, uint8_t *id);
+bool tox_conference_get_id(const Tox *tox, uint32_t conference_number, uint8_t *id, TOX_ERR_CONFERENCE_GET_ID *error);
 
 typedef enum TOX_ERR_CONFERENCE_BY_ID {
 
@@ -2969,18 +2988,6 @@ typedef enum TOX_ERR_CONFERENCE_BY_ID {
  * @return the conference number on success, an unspecified value on failure.
  */
 uint32_t tox_conference_by_id(const Tox *tox, const uint8_t *id, TOX_ERR_CONFERENCE_BY_ID *error);
-
-/**
- * Get the conference unique ID.
- *
- * If uid is NULL, this function has no effect.
- *
- * @param uid A memory region large enough to store TOX_CONFERENCE_UID_SIZE bytes.
- *
- * @return true on success.
- * @deprecated use tox_conference_get_id instead (exactly the same function, just renamed).
- */
-bool tox_conference_get_uid(const Tox *tox, uint32_t conference_number, uint8_t *uid);
 
 typedef enum TOX_ERR_CONFERENCE_BY_UID {
 
@@ -3213,6 +3220,7 @@ typedef TOX_ERR_CONFERENCE_NEW Tox_Err_Conference_New;
 typedef TOX_ERR_CONFERENCE_DELETE Tox_Err_Conference_Delete;
 typedef TOX_ERR_CONFERENCE_PEER_QUERY Tox_Err_Conference_Peer_Query;
 typedef TOX_ERR_CONFERENCE_SET_MAX_OFFLINE Tox_Err_Conference_Set_Max_Offline;
+typedef TOX_ERR_CONFERENCE_GET_ID Tox_Err_Conference_Get_Id;
 typedef TOX_ERR_CONFERENCE_BY_ID Tox_Err_Conference_By_Id;
 typedef TOX_ERR_CONFERENCE_BY_UID Tox_Err_Conference_By_Uid;
 typedef TOX_ERR_CONFERENCE_INVITE Tox_Err_Conference_Invite;

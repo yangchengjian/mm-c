@@ -1943,15 +1943,18 @@ Tox_Conference_Type tox_conference_get_type(const Tox *tox, uint32_t conference_
     return (Tox_Conference_Type)ret;
 }
 
-bool tox_conference_get_id(const Tox *tox, uint32_t conference_number, uint8_t *id /* TOX_CONFERENCE_ID_SIZE bytes */)
+bool tox_conference_get_id(const Tox *tox, uint32_t conference_number, uint8_t *id /* TOX_CONFERENCE_ID_SIZE bytes */, Tox_Err_Conference_Get_Id *error)
 {
-    return conference_get_id(tox->m->conferences_object, conference_number, id);
-}
-
-// TODO(iphydf): Delete in 0.3.0.
-bool tox_conference_get_uid(const Tox *tox, uint32_t conference_number, uint8_t *uid /* TOX_CONFERENCE_ID_SIZE bytes */)
-{
-    return tox_conference_get_id(tox, conference_number, uid);
+    if (!conference_number) {
+        SET_ERROR_PARAMETER(error, TOX_ERR_CONFERENCE_GET_ID_NULL);
+        return UINT32_MAX;
+    }
+    const ret = conference_get_id(tox->m->conferences_object, conference_number, id);
+    if (ret == false) {
+        SET_ERROR_PARAMETER(error, TOX_ERR_CONFERENCE_GET_ID_NOT_FOUND);
+        return UINT32_MAX;
+    }
+    return ret;
 }
 
 uint32_t tox_conference_by_id(const Tox *tox, const uint8_t *id, Tox_Err_Conference_By_Id *error)
